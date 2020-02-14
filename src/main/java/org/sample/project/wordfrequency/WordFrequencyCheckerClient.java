@@ -3,26 +3,22 @@ package org.sample.project.wordfrequency;
 import java.io.IOException;
 import java.util.Scanner;
 
-/**
- * This is a client class for Word Frequency application
- * 
- * @author Meghana
- */
-public class WordFrequencyClient {
+//Word Frequency client class
+public class WordFrequencyCheckerClient {
 
 	
 	// main method is a user interaction client for Word Frequency.
 	public static void main(String[] args) throws IOException {
 		
-		WordFrequency wordFrequency = new WordFrequency("inputfile");
+		WordFrequencyChecker wordFrequency = new WordFrequencyChecker("inputfile");
 		
 		// Interact with user to perform operations
 		Scanner sc = null;
 		try {
 			while(true) {
 	            System.out.println();
-	            System.out.println("Available operations:");
-	            System.out.println("1. Print all words frequency");
+	            System.out.println("Operations:");
+	            System.out.println("1. Print frequency of all the words");
 	            System.out.println("2. Print frequency details of a word");
 	            System.out.println("3. Exit");
 	            System.out.println("Enter option # to perform operation:");
@@ -38,19 +34,19 @@ public class WordFrequencyClient {
 	            
 			    switch(i) {
 	                case 1:
-	                	wordFrequency.printWordFrequency();
+	                	wordFrequency.printWordFrequencyChecker();
 	                    break; 
 	                case 2:
 	                    System.out.println("Enter word to get frequency : ");
                     	sc = new Scanner(System.in);
                         String word = sc.next();
-                        wordFrequency.printWordFrequencyDetails(word);
+                        wordFrequency.printWordFrequencyCheckerDetails(word);
 	                    break;
 	                case 3:
-	                	System.out.println("Existing the Word Frequency Application");
+	                	System.out.println("Existing the Word Frequency Checker Application");
 	                	System.exit(0);
 	                default:
-	                	System.out.println("Invalid value, please choose from available choices only!");
+	                	System.out.println("Invalid option, please choose from above choices");
 	                	break;
 	            }
 	        }

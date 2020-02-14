@@ -10,56 +10,44 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
-/**
- * Purpose of this class is to generate the word frequencies given the input files
- * 
- * @author Meghana
- */
-public class WordFrequency {
+//generating the word frequency in the files
+public class WordFrequencyChecker {
 	
 	Map<String,Map<String, Integer>> wordFrequencyMap = new HashMap<>();
-	String inputfileName = "inputfile";
+	String testfileName = "testfile";
 	
-	public WordFrequency(String inputfile) throws IOException {
-		// Load Word frequency in a map
-		this.inputfileName = inputfile;
+	public WordFrequencyChecker(String testfile) throws IOException {
+		// Load Word frequency in the map
+		this.testfileName = testfile;
 		init();
 	}
 
-	/**
-	 * init method loads the seeder file(which contains relative location of input files containing words/text) 
-	 * by calling loadinputfile method.
-	 * For each input file, this method calls the loadWordFrequencyMap to load all the words from each input 
-	 * file into the global map wordFrequencyMap.
-	 * 
-	 * @return void
-	 * @throws IOException
-	 */
+	// init method
 	public void init() throws IOException {
-		InputStream inputStream = loadFile(inputfileName);
+		InputStream inputStream = loadFile(testfileName);
 		if(inputStream == null) {
 			throw new FileNotFoundException();
 		}
 		
-		Scanner loadersc = null;
+		Scanner loaderscn = null;
 		try {
-			loadersc = new Scanner(inputStream, "UTF-8");
-			// Add all the file names mentioned in inputfile into filesList
+			loaderscn = new Scanner(inputStream, "UTF-8");
+			// Add all the file names mentioned in testfile into filesList
 			ArrayList<String> filesList = new ArrayList<String>();
-		    while (loadersc.hasNextLine()) {
-		        filesList.add(loadersc.nextLine());
+		    while (loaderscn.hasNextLine()) {
+		        filesList.add(loaderscn.nextLine());
 		    }
 		    // For each file in filesList, load/update the wordFrequencyMap
 		    for(String fileName: filesList) {
-		    	loadWordFrequencyMap(fileName);
+		    	loadWordFrequencyCheckerMap(fileName);
 		    }
 		} finally {
 			// Close the stream and scanner objects to avoid leak
 		    if (inputStream != null) {
 				inputStream.close();
 		    }
-		    if (loadersc != null) {
-		    	loadersc.close();
+		    if (loaderscn != null) {
+		    	loaderscn.close();
 		    }
 		}
 	}
@@ -80,15 +68,12 @@ public class WordFrequency {
 	 * <word, < <fileName, wordFrequency>, <fileName, wordFrequency> ,... >
 	 * example: <manner, < <testfile1, 5>, <testfile2, 8>, <testfile3, 7> >
 	 * which means -
-	 * word "manner" appears 5 times in inputfile1, 3 times in inputfile2, 1 time in inputfile3 and 7 times in inputfile4
-	 * 
-	 * 
-	 * 
+	 * word "manner" appears 5 times in testfile1, 3 times in testfile2, 1 time in testfile3 and 7 times in testfile4
 	 * 
 	 * @param fileName
 	 * @throws IOException 
 	 */
-	public void loadWordFrequencyMap(String fileName) throws IOException {
+	public void loadWordFrequencyCheckerMap(String fileName) throws IOException {
 		InputStream inputStream = null;
 		Scanner sc = null;
 		try {
@@ -98,22 +83,22 @@ public class WordFrequency {
 				// Scanner object to read inputStream (from input file)
 				sc = new Scanner(inputStream, "UTF-8");
 				// wordMapInternal is the value of each word in wordFrequencyMap. 
-				// wordMapInternal- Key is inputfilename and value is frequency(of the word in that filename)
+				// wordMapInternal- Key is testfilename and value is frequency (of the word in that filename)
 				Map<String, Integer> wordMapInternal;
 			    while (sc.hasNextLine()) {
 			    	// read each line in the file to capture words
 			    	String[] words = sc.nextLine().split("[!_.'‘,@?;\" ]");
 					/* Logic-
-					for each word in the file-
-					if word already exist in wordFreqencyMap then-
-						if wordMapInternal consists this inputfile entry/key then-
+					for each word in the file:
+					if word = exists(wordFreqencyMap) then-
+						if wordMapInternal.consists(testfile.getkey)
 							update the entry in wordMapInternal by incrementing word frequency value
 						else
-							create a new entry in wordMapInternal for this inputfile with frequency as 1
+							create a new entry in wordMapInternal for this testfile with frequency as 1
 					else
-						create a new entry in wordMapInternal for this inputfile with frequency as 1
+						create a new entry in wordMapInternal for this testfile with frequency as 1
 						put wordMapInternal in wordFrequencyMap
-					end for */
+					end  */
 			    	for(String word: words) {
 			    		wordMapInternal = new HashMap<>();
 			    		if(wordFrequencyMap.containsKey(word)) {
@@ -146,7 +131,7 @@ public class WordFrequency {
 	}
 	
 	// printWordFrequency method prints all the words with their frequency 
-	public void printWordFrequency() {
+	public void printWordFrequencyChecker() {
 		if(wordFrequencyMap != null) {
 			Set<Entry<String, Map<String, Integer>>> externalEntrySet = wordFrequencyMap.entrySet();
 		    for(Entry<String, Map<String, Integer>> externalEntry: externalEntrySet) { 
@@ -161,16 +146,11 @@ public class WordFrequency {
 		}
 	}
 	
-	/**
-	 * printWordFrequencyDetails method prints the frequency details of provided word
-	 * 
-	 * @return void
-	 * @param word
-	 * @throws  
-	 */
-	public void printWordFrequencyDetails(String word) {
+	// printWordFrequencyDetails method prints the frequency details of provided word 
+	public void printWordFrequencyCheckerDetails(String word) {
 		if(wordFrequencyMap != null) {
-			Map<String, Integer> internalMap = wordFrequencyMap.entrySet().stream()
+			Map<String, Integer> internalMap = wordFrequencyMap
+					.entrySet().stream()
 					.filter(e -> e.getKey().equals(word))
 					.map(e -> e.getValue())
 					.findAny()

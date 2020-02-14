@@ -1,4 +1,11 @@
-# word-frequency
-A program that displays how many times a word appears in a file, or across files.
+# word-frequency-Checker
 
-[Project wiki/documentation is maintained here](https://github.com/shwetavc/word-frequency/wiki)
+Build the application:
+
+git clone https://github.com/Meghana3045/word-frequency-checker.git
+cd word-frequency 
+mvn clean install 
+
+Run the application:
+
+java -jar target/word-frequency.jar
